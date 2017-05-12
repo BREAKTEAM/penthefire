@@ -67,19 +67,5 @@ class ftp6(ftp):
         self.family = socket.AF_INET6
 
     def build_command(self):
-        (ipaddr, port(a, b)=self.conn.getsockname()
+        (ipaddr, port, a, b) = self.conn.getsockname()
         return 'EPRT |2|%s|%d|\r\n' % (ipaddr, self.port)
-
-class irc(generic_helper):
-    def ipnumber(self, ip):
-        ip=ip.rstrip().split('.')
-        ipn=0
-        while ip:
-            ipn=(ipn << 8) + int(ip.pop(0))
-        return ipn
-
-    def build_command(self):
-        return 'PRIVMSG wolffirewall : \x01DCC CHAT CHAT %d %d\x01\r\n' % (self.ipnumber(self.ip), self.port)
-
-    def build_lfilter(self):
-        return lambda(r): TCP in r and r[TCP].dport == 6667 and r[IP].src == self.ip

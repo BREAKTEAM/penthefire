@@ -112,11 +112,11 @@ elif args.nodpi == True:
     target = ndi.http_nodpi(args.iface, queue=int(
         args.queue), verbose=args.verbose)
 
-if args.ndi == True:
+if args.nodpi == True:
     print "Press CTRL+C to interrupt"
- ret = target.run()
- if ret is None:
-     sys.exit("Error during process")
+ret = target.run()
+if ret is None:
+    sys.exit("Error during process")
 
 if args.server == True:
     print "You should be able to connect to %s:%d" % ret

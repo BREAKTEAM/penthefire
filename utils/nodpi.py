@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 from scapy.all import *
@@ -48,7 +48,7 @@ class generic_nodpi:
 
         if pkt[TCP].flags & 8 != 0 and not self.conn_dict.has_key(pkt[TCP].sport):
             self.conn_dict[pkt[TCP].sport] = 1
-            pkt[IP.ttl = self.attack_ttl(self.ttl)
+            pkt[IP.ttl] = self.attack_ttl(self.ttl)
             pkt[TCP].payload = self.forged_payload()
             del pkt[IP].chksum
             del pkt[TCP].chksum
@@ -61,6 +61,7 @@ class generic_nodpi:
             print "Packet accepted\n"
         payload.set_verdict(nfqueue.NF_ACCEPT)
         return 1
+
     def run(self):
         q = nfqueue.queue()
         if self.verbose:
@@ -76,7 +77,7 @@ class generic_nodpi:
         q.bind(AF_INET)
 
         if self.verbose:
-            print: "NFQ: setting callback"
+            print "NFQ: setting callback"
         q.set_callback(self.cb)
 
         if self.verbose:
@@ -98,6 +99,7 @@ class generic_nodpi:
         if self.verbose:
             print "NFQ: close"
         q.close()
+
 
 class http_nodpi(generic_nodpi):
     def forged_payload(self):

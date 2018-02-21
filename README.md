@@ -15,3 +15,9 @@ Data packet is received, the attacker send a forged DCC command.
 Client connection is open by the attacker. Connect to the ftp server behind a firewall and initiate a real connection. Once the session is setup, he launch the attack by sending a forged 227 command, if using IPv6 using 229 command.
 
 Readme not complete, continue update...
+
+#### Setup
+
+```bash
+python2 setup.py install
+```

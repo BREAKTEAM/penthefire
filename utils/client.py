@@ -44,13 +44,15 @@ class irc(generic_client):
 
     def build_command(self):
         (ipaddr, port) = self.conn.getsockname()
-        return 'PRIVMSG wolffirewall : \0x1DCC CHAT CHAT %d %d\x01\r\n' % (self.ipnumber(ipaddr), self.port)
+        return 'PRIVMSG wolffirewall : \0x1DCC CHAT CHAT %d %d\x01\r\n' % (
+            self.ipnumber(ipaddr), self.port)
 
 
 class ftp(generic_client):
     def build_command(self):
         (ipaddr, port) = self.conn.getsockname()
-        return 'PORT %s.%d,%d\r\n' % (ipaddr.replace('.', ','), self.port >> 8 & 0xff, self.port & 0xff)
+        return 'PORT %s.%d,%d\r\n' % (ipaddr.replace('.', ','),
+                                      self.port >> 8 & 0xff, self.port & 0xff)
 
     def send_command(self):
         self.conn.sendall('USER wolffirewall\r\n')

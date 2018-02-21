@@ -35,15 +35,15 @@ class generic_helper:
             orig_dst = pkt[Ether].dst
             # change payload
             if self.proto == 'IPv4':
-                att = Ether(src=pkt[Ether].dst,
-                            dst=pkt[Ether].src) / IP() / TCP()
+                att = Ether(
+                    src=pkt[Ether].dst, dst=pkt[Ether].src) / IP() / TCP()
                 att[IP] = pkt[IP]
                 att[IP].id = pkt[IP].id + 1
                 del att[IP].chksum
                 del att[IP].len
             else:
-                att = Ether(src=pkt[Ether].dst,
-                            dst=pkt[Ether].src) / IPv6() / TCP()
+                att = Ether(
+                    src=pkt[Ether].dst, dst=pkt[Ether].src) / IPv6() / TCP()
                 att[IPv6] = pkt[IPv6]
                 del att[IPv6].chksum
                 del att[IPv6].plen
@@ -68,13 +68,18 @@ class generic_helper:
 
     def run(self):
         self.initialize()
-        sniff(iface=self.iface, prn=self.server_callback,
-              filter=self.build_filter(), store=0, timeout=40)
+        sniff(
+            iface=self.iface,
+            prn=self.server_callback,
+            filter=self.build_filter(),
+            store=0,
+            timeout=40)
 
 
 class ftp(generic_helper):
     def build_command(self):
-        return "227 Entering Passive Mode (%s,%d,%d)\r\n" % (self.ip.replace('.', ','), self.port >> 8 & 0xff, self.port & 0xff)
+        return "227 Entering Passive Mode (%s,%d,%d)\r\n" % (
+            self.ip.replace('.', ','), self.port >> 8 & 0xff, self.port & 0xff)
 
     def build_filter(self):
         return lambda (r): TCP in r and r[TCP].sport == 21 and r[TCP].src == self.ip
